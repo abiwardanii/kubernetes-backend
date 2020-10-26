@@ -1,0 +1,68 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: development
+
+---
+apiVersion: v1
+data:
+  DB_HOST: "3.87.243.124"
+  DB_USER: "arifh19"
+  DB_PASSWORD: "1sampai9"
+  DB_NAME: "restaurant"
+  REDIS_HOST: "3.87.243.124"
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: "1sampai9"
+  JWT_KEYS: "AUx857wf^p!fp>+Nx5KK-.xucu7p"
+
+kind: ConfigMap
+metadata:
+  name: env-restaurant
+  namespace: development
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restaurant-backend-app
+  namespace: development
+  labels:
+    tier: restaurant-backend
+spec:
+  selector:
+    matchLabels:
+      app: restaurant-backend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: restaurant-backend
+    spec:
+      containers:
+        - name: restaurant-backend
+          image: arifh19/restaurant-backend:dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: env-restaurant
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: restaurant-service-backend
+  namespace: development
+  labels:
+    app: restaurant-backend
+spec:
+  selector:
+    app: restaurant-backend
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: serviceport
