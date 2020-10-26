@@ -9,3 +9,4 @@
   remote_file: /home/ansman/restaurant
   dockercomposeDev: docker-compose.dev.yml
   dockercomposeProd: docker-compose.yml
+  deployFile: deploy.yml

@@ -44,11 +44,20 @@ spec:
         - name: restaurant-backend
           image: arifh19/restaurant-backend:dev
           imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /backend/public/upload
+              name: backend-volume
           ports:
             - containerPort: 3000
           envFrom:
             - configMapRef:
                 name: env-restaurant
+      volumes:
+        - name: backend-volume
+          hostPath:
+            path: /home/ubuntu/restaurant/data
+            type: DirectoryOrCreate
+                
 ---
 apiVersion: v1
 kind: Service
