@@ -1,6 +1,6 @@
 def builderDocker
 def CommitHash
-def REPO = 'arifh19/restaurant-backend'
+def REPO = 'arifh19/kubernetes-backend'
 def BRANCH_DEV = 'dev'
 def BRANCH_PROD = 'master'
 def REMOTE_DIR = 'ansibleBackend'
