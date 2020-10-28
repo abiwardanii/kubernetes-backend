@@ -13,5 +13,7 @@ routes.use('/product', product)
 routes.use('/history', history)
 routes.use('/user', user)
 routes.use('/auth', auth)
-
+routes.get('/', function (req, res) {
+    res.send('API Connected')
+  })
 module.exports = routes
