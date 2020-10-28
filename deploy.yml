@@ -96,13 +96,13 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: restaurant-service-backend
+              serviceName: restaurant-service-frontend
               servicePort: 80
     - host: www.arifhdev.me
       http:
         paths:
           - backend:
-              serviceName: restaurant-service-backend
+              serviceName: restaurant-service-frontend
               servicePort: 80
     - host: api.arifhdev.me
       http:
