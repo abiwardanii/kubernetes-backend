@@ -1,6 +1,6 @@
 ---
 - name: "Deploy to Stagging"
-  hosts: deloyserver
+  hosts: deployserver
   vars_files:
     - vars.yml
 

@@ -1,6 +1,6 @@
 ---
 - name: "Deploy to Production"
-  hosts: deloyserver
+  hosts: deployserver
   vars_files:
     - vars.yml
 
@@ -22,7 +22,7 @@
 
     - name: copy k8s yml file to k8s-control
       copy:
-        src: "{{dests}}/{{proj}}/kubernetes/{{deployFile}}"
+        src: "{{dests}}/{{proj}}/master/kubernetes/{{deployFile}}"
         dest: "{{remote_file}}/{{deployFile}}"
       ignore_errors: yes
 

@@ -64,20 +64,20 @@
     - name: "Clone Git Repository"
       git:
         repo: "{{repo}}"
-        dest: "{{dests}}/{{proj}}"
+        dest: "{{dests}}/{{proj}}/{{branch}}"
         version: "{{branch}}"
         update: yes
 
     - name: Pull latest changes
       command: git pull origin {{branch}}
       args:
-        chdir: "{{dests}}/{{proj}}"
+        chdir: "{{dests}}/{{proj}}/{{branch}}"
 
     - name: "Build image"
       community.general.docker_image:
         name: "{{hub}}/{{proj}}:{{branch}}"
         build:
-          path: "{{dests}}/{{proj}}"
+          path: "{{dests}}/{{proj}}/{{branch}}"
         source: build
         state: present
 

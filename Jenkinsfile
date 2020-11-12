@@ -4,7 +4,7 @@ def REPO = 'arifh19/kubernetes-backend'
 def BRANCH_DEV = 'dev'
 def BRANCH_PROD = 'master'
 def REMOTE_DIR = 'ansibleBackend'
-def PROJECT_DIR = '/home/ansman/project/restaurant-backend/ansible'
+def PROJECT_DIR = "/home/ansman/project/restaurant-backend/${BRANCH_NAME}/ansible"
 
 pipeline {
     agent any
