@@ -7,11 +7,11 @@ metadata:
 ---
 apiVersion: v1
 data:
-  DB_HOST: "172.31.91.178"
+  DB_HOST: "54.205.127.148"
   DB_USER: "arifh19"
   DB_PASSWORD: "1sampai9"
   DB_NAME: "restaurant"
-  REDIS_HOST: "172.31.91.178"
+  REDIS_HOST: "54.205.127.148"
   REDIS_PORT: "6379"
   REDIS_PASSWORD: "1sampai9"
   JWT_KEYS: "AUx857wf^p!fp>+Nx5KK-.xucu7p"
