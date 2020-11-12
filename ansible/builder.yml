@@ -1,70 +1,97 @@
 ---
-  - name: Build Docker
-    hosts: localhost
-    vars_files:
-      - vars.yml
+- name: Build Docker
+  hosts: localhost
+  vars_files:
+    - vars.yml
 
-    tasks:
-      - name: Check connection node
-        become: true
-        ping:
-      
-      - name: Install Docker
-        become: true
-        yum:
-          name: docker
-          state: present
-      
-      - name: Ensure docker is running
-        become: true
-        service:
-          name: docker
-          state: started
-          enabled: yes
-      
-      - name: Add user to group Docker
-        become: true
-        user:
-          name: ansman
-          shell: /bin/bash
-          groups: docker
-          append: yes
-          
-      - name: "Ensure git installed"
-        become: true
-        yum:
-          name: git
-          state: present
-      
-      - name: "Installing Python Docker"
-        become: true
-        pip:
-          name: docker
-      
-      - name: "Clone Git Repository"
-        git:
-          repo: "{{repo}}"
-          dest: "{{dests}}/{{proj}}"
-          version: "{{branch}}"
-          update: yes
+  tasks:
+    - name: Check connection node
+      become: true
+      ping:
 
-      - name: Pull latest changes
-        command: git pull origin {{branch}}
-        args:
-          chdir: "{{dests}}/{{proj}}"
+    - name: Install aptitude using apt
+      become: true
+      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
 
-      - name: Remove image
-        community.general.docker_image:
-          state: absent
-          name: "{{hub}}/{{proj}}"
-          tag: "{{branch}}"
+    - name: Install required system packages
+      become: true
+      apt: name={{ item }} state=latest update_cache=yes
+      loop:
+        ["apt-transport-https", "ca-certificates", "software-properties-common"]
 
-      - name: "Build image"
-        community.general.docker_image:
-          name: "{{hub}}/{{proj}}:{{branch}}"
-          build:
-            path: "{{dests}}/{{proj}}"
-          source: build
-          state: present
-          
-        
+    - name: Add Docker GPG apt Key
+      become: true
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      become: true
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      become: true
+      apt: update_cache=yes name=docker-ce state=latest
+
+    - name: Ensure docker is running
+      become: true
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add user to group Docker
+      become: true
+      user:
+        name: ansman
+        shell: /bin/bash
+        groups: docker
+        append: yes
+
+    - name: "Ensure git installed"
+      become: true
+      apt:
+        name: git
+        state: present
+
+    - name: "Installing Python Docker"
+      become: true
+      pip:
+        name: docker
+
+    - name: "Clone Git Repository"
+      git:
+        repo: "{{repo}}"
+        dest: "{{dests}}/{{proj}}"
+        version: "{{branch}}"
+        update: yes
+
+    - name: Pull latest changes
+      command: git pull origin {{branch}}
+      args:
+        chdir: "{{dests}}/{{proj}}"
+
+    - name: "Build image Dev and Stag"
+      community.general.docker_image:
+        name: "{{hub}}/{{proj}}:{{branch}}"
+        build:
+          path: "{{dests}}/{{proj}}"
+          dockerfile: DockerfileDev
+        source: build
+        state: present
+      when: branch=="dev"
+
+    - name: "Build image Prod"
+      community.general.docker_image:
+        name: "{{hub}}/{{proj}}:{{branch}}"
+        build:
+          path: "{{dests}}/{{proj}}"
+        source: build
+        state: present
+      when: branch=="master"
+
+    - name: clean <none> image
+      shell: docker rmi $(docker images --filter dangling=true -q --no-trunc)
+      ignore_errors: yes

@@ -1,32 +1,34 @@
 ---
-  - name: 'Deploy to Development and Stagging'
-    hosts: prodserver
-    become: true
-    vars_files:
-      - vars.yml
+- name: "Deploy to Development and Stagging"
+  hosts: prodserver
+  become: true
+  vars_files:
+    - vars.yml
 
-    tasks:
-      - name: "Check connection to node"
-        ping:
+  tasks:
+    - name: "Check connection to node"
+      ping:
 
-      # - name: delete backend posd if exist
-      #   command: kubectl delete deploy -l tier=restaurant-backend -n development
-      #   ignore_errors: yes
-        
-      - name: remove file if exist
-        command: rm {{deployFile}}
-        args:
-          chdir: "{{remote_file}}"
-        ignore_errors: yes
-      
-      - name: copy k8s yml file to k8s-control
-        copy:
-          src: "{{dests}}/{{proj}}/{{deployFile}}"
-          dest: "{{remote_file}}/{{deployFile}}"
-        ignore_errors: yes
-      
-      - name: create a deployment
-        command: "kubectl apply -f {{remote_file}}/{{deployFile}}"
-      
-      - name: update deployment with new pods if image updated in docker hub
-        command: kubectl rollout restart deployment restaurant-backend-app -n development
+    - name: Create a directory restaurant if it does not exist
+      file:
+        path: "{{remote_file}}"
+        state: directory
+        mode: "0755"
+
+    - name: remove file if exist
+      command: rm {{deployFile}}
+      args:
+        chdir: "{{remote_file}}"
+      ignore_errors: yes
+
+    - name: copy k8s yml file to k8s-control
+      copy:
+        src: "{{dests}}/{{proj}}/kubernetes/{{deployFileDev}}"
+        dest: "{{remote_file}}/{{deployFileDev}}"
+      ignore_errors: yes
+
+    - name: create a deployment
+      command: "kubectl apply -f {{remote_file}}/{{deployFile}}"
+
+    - name: update deployment with new pods if image updated in docker hub
+      command: kubectl rollout restart deployment restaurant-backend-app -n development
