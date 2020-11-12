@@ -9,5 +9,5 @@ user: ansman
 remote_file: /home/ansman/restaurant
 dockercomposeDev: docker-compose.dev.yml
 dockercomposeProd: docker-compose.yml
-deployFile: deploy.yml
-deployFileDev: deploy-dev.yml
+deployFile: deploy-backend-prod.yml
+deployFileDev: deploy-backend-dev.yml
