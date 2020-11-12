@@ -4,7 +4,7 @@ def REPO = 'arifh19/kubernetes-backend'
 def BRANCH_DEV = 'dev'
 def BRANCH_PROD = 'master'
 def REMOTE_DIR = 'ansibleBackend'
-def PROJECT_DIR = '/home/ansman/project/restaurant-backend/ansible'
+def PROJECT_DIR = "/home/ansman/project/restaurant-backend/${BRANCH_NAME}/ansible"
 
 pipeline {
     agent any
@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Build project') {
             steps {
-                nodejs('nodejs12') {
+                nodejs('nodejs14') {
                     sh 'npm install'
                 }
             }
@@ -36,7 +36,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ctrl-node',
+                                configName: 'control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
@@ -53,14 +53,13 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ctrl-node',
+                                configName: 'control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
                                         sourceFiles: "ansible/builder.yml",
                                         remoteDirectory: "${REMOTE_DIR}",
                                         execCommand: "ansible-playbook ${REMOTE_DIR}/ansible/builder.yml --extra-vars 'branch=${BRANCH_NAME}'",
-                                        execTimeout: 120000,
                                     )
                                 ]
                             )
@@ -75,7 +74,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ctrl-node',
+                                configName: 'control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
@@ -96,7 +95,7 @@ pipeline {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
-                                    configName: 'ctrl-node',
+                                    configName: 'control-node',
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
@@ -111,7 +110,7 @@ pipeline {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
-                                    configName: 'ctrl-node',
+                                    configName: 'control-node',
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
