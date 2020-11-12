@@ -22,7 +22,7 @@
 
     - name: copy k8s yml file to k8s-control
       copy:
-        src: "{{dests}}/{{proj}}/kubernetes/{{deployFileStag}}"
+        src: "{{dests}}/{{proj}}/staging/kubernetes/{{deployFileStag}}"
         dest: "{{remote_file}}/{{deployFileStag}}"
       ignore_errors: yes
 
