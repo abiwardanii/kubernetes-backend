@@ -36,7 +36,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ctrl-node',
+                                configName: 'control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
@@ -53,7 +53,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ctrl-node',
+                                configName: 'control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
