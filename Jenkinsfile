@@ -60,7 +60,6 @@ pipeline {
                                         sourceFiles: "ansible/builder.yml",
                                         remoteDirectory: "${REMOTE_DIR}",
                                         execCommand: "ansible-playbook ${REMOTE_DIR}/ansible/builder.yml --extra-vars 'branch=${BRANCH_NAME}'",
-                                        execTimeout: 120000,
                                     )
                                 ]
                             )
@@ -75,7 +74,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ctrl-node',
+                                configName: 'control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
@@ -96,7 +95,7 @@ pipeline {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
-                                    configName: 'ctrl-node',
+                                    configName: 'control-node',
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
@@ -111,7 +110,7 @@ pipeline {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
-                                    configName: 'ctrl-node',
+                                    configName: 'control-node',
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
