@@ -1,5 +1,5 @@
 ---
-- name: "Deploy to Development and Stagging"
+- name: "Deploy to Stagging"
   hosts: deloyserver
   vars_files:
     - vars.yml
@@ -15,19 +15,19 @@
         mode: "0755"
 
     - name: remove file if exist
-      command: rm {{deployFileDev}}
+      command: rm {{deployFileStag}}
       args:
         chdir: "{{remote_file}}"
       ignore_errors: yes
 
     - name: copy k8s yml file to k8s-control
       copy:
-        src: "{{dests}}/{{proj}}/kubernetes/{{deployFileDev}}"
-        dest: "{{remote_file}}/{{deployFileDev}}"
+        src: "{{dests}}/{{proj}}/kubernetes/{{deployFileStag}}"
+        dest: "{{remote_file}}/{{deployFileStag}}"
       ignore_errors: yes
 
     - name: create a deployment
-      command: "kubectl apply -f {{remote_file}}/{{deployFileDev}}"
+      command: "kubectl apply -f {{remote_file}}/{{deployFileStag}}"
 
     - name: update deployment with new pods if image updated in docker hub
-      command: kubectl rollout restart deployment restaurant-backend-app -n development
+      command: kubectl rollout restart deployment restaurant-backend-app -n {{nsstag}}

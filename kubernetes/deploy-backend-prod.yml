@@ -2,16 +2,16 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: development
+  name: production
 
 ---
 apiVersion: v1
 data:
-  DB_HOST: "3.87.243.124"
+  DB_HOST: "54.205.127.148"
   DB_USER: "arifh19"
   DB_PASSWORD: "1sampai9"
   DB_NAME: "restaurant"
-  REDIS_HOST: "3.87.243.124"
+  REDIS_HOST: "54.205.127.148"
   REDIS_PORT: "6379"
   REDIS_PASSWORD: "1sampai9"
   JWT_KEYS: "AUx857wf^p!fp>+Nx5KK-.xucu7p"
@@ -19,14 +19,14 @@ data:
 kind: ConfigMap
 metadata:
   name: env-restaurant
-  namespace: development
+  namespace: production
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: restaurant-backend-app
-  namespace: development
+  namespace: production
   labels:
     tier: restaurant-backend
 spec:
@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: restaurant-backend
-          image: arifh19/restaurant-backend:dev
+          image: arifh19/restaurant-backend:master
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /backend/public/upload
@@ -63,7 +63,7 @@ spec:
       volumes:
         - name: backend-volume
           hostPath:
-            path: /home/ubuntu/restaurant/data
+            path: /home/ubuntu/restaurant/production/data
             type: DirectoryOrCreate
 
 ---
@@ -71,7 +71,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: restaurant-service-backend
-  namespace: development
+  namespace: production
 spec:
   selector:
     app: restaurant-backend
@@ -85,24 +85,24 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: restaurant-ingress
-  namespace: development
+  namespace: production
   labels:
     app: restaurant-ingress
 spec:
   rules:
-    - host: arifhdev.me
+    - host: arifh.web.id
       http:
         paths:
           - backend:
               serviceName: restaurant-service-frontend
               servicePort: 80
-    - host: www.arifhdev.me
+    - host: www.arifh.web.id
       http:
         paths:
           - backend:
               serviceName: restaurant-service-frontend
               servicePort: 80
-    - host: api.arifhdev.me
+    - host: api.arifh.web.id
       http:
         paths:
           - backend:
