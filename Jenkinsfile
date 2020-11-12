@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Build project') {
             steps {
-                nodejs('nodejs12') {
+                nodejs('nodejs14') {
                     sh 'npm install'
                 }
             }
