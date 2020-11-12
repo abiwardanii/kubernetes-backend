@@ -15,7 +15,7 @@
         mode: "0755"
 
     - name: remove file if exist
-      command: rm {{deployFile}}
+      command: rm {{deployFileDev}}
       args:
         chdir: "{{remote_file}}"
       ignore_errors: yes
@@ -27,7 +27,7 @@
       ignore_errors: yes
 
     - name: create a deployment
-      command: "kubectl apply -f {{remote_file}}/{{deployFile}}"
+      command: "kubectl apply -f {{remote_file}}/{{deployFileDev}}"
 
     - name: update deployment with new pods if image updated in docker hub
       command: kubectl rollout restart deployment restaurant-backend-app -n development
