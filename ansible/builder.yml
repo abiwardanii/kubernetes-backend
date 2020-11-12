@@ -73,24 +73,13 @@
       args:
         chdir: "{{dests}}/{{proj}}"
 
-    - name: "Build image Dev and Stag"
-      community.general.docker_image:
-        name: "{{hub}}/{{proj}}:{{branch}}"
-        build:
-          path: "{{dests}}/{{proj}}"
-          dockerfile: DockerfileDev
-        source: build
-        state: present
-      when: branch=="dev"
-
-    - name: "Build image Prod"
+    - name: "Build image"
       community.general.docker_image:
         name: "{{hub}}/{{proj}}:{{branch}}"
         build:
           path: "{{dests}}/{{proj}}"
         source: build
         state: present
-      when: branch=="master"
 
     - name: clean <none> image
       shell: docker rmi $(docker images --filter dangling=true -q --no-trunc)
