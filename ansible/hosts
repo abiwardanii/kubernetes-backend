@@ -1,2 +1,2 @@
 localhost
-prodserver ansible_host=172.31.86.213 ansible_connection=ssh
+deloyserver ansible_host=172.31.83.14 ansible_connection=ssh

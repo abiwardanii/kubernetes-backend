@@ -1,6 +1,6 @@
 ---
 - name: "Deploy to Development and Stagging"
-  hosts: prodserver
+  hosts: deloyserver
   become: true
   vars_files:
     - vars.yml
