@@ -11,8 +11,9 @@ data:
   DB_USER: "arifh19"
   DB_PASSWORD: "1sampai9"
   DB_NAME: "restaurant"
+  DB_PORT: "21999"
   REDIS_HOST: "54.205.127.148"
-  REDIS_PORT: "6379"
+  REDIS_PORT: "21998"
   REDIS_PASSWORD: "1sampai9"
   JWT_KEYS: "AUx857wf^p!fp>+Nx5KK-.xucu7p"
 
