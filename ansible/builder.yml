@@ -73,13 +73,17 @@
       args:
         chdir: "{{dests}}/{{proj}}/{{branch}}"
 
+    - name: clean image
+      shell: docker rmi arifh19/restaurant-backend:{{branch}}
+      ignore_errors: yes
+
     - name: "Build image"
       community.general.docker_image:
         name: "{{hub}}/{{proj}}:{{branch}}"
         build:
           path: "{{dests}}/{{proj}}/{{branch}}"
         source: build
-        state: build
+        state: present
 
     - name: clean <none> image
       shell: docker rmi $(docker images --filter dangling=true -q --no-trunc)
