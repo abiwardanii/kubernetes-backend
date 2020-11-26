@@ -79,7 +79,7 @@
         build:
           path: "{{dests}}/{{proj}}/{{branch}}"
         source: build
-        state: present
+        state: build
 
     - name: clean <none> image
       shell: docker rmi $(docker images --filter dangling=true -q --no-trunc)
