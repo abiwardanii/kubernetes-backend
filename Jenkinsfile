@@ -36,7 +36,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'control-node',
+                                configName: 'arif-control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
@@ -53,7 +53,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'control-node',
+                                configName: 'arif-control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
@@ -74,7 +74,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'control-node',
+                                configName: 'arif-control-node',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
@@ -95,7 +95,7 @@ pipeline {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
-                                    configName: 'control-node',
+                                    configName: 'arif-control-node',
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
@@ -110,7 +110,7 @@ pipeline {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
-                                    configName: 'control-node',
+                                    configName: 'arif-control-node',
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
