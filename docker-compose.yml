@@ -36,7 +36,7 @@ services:
       replicas: 3
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 50M
     environment:
       - JWT_KEYS={=AUx857wf^p!fp>+Nx5KK-.xucu7p
@@ -47,7 +47,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=1sampai9
-  
+
   frontend:
     image: arifh19/restaurant-frontend:master
     ports:
