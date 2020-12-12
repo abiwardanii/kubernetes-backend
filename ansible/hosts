@@ -1,2 +1,2 @@
 localhost
-deployserver ansible_host=172.31.83.14 ansible_connection=ssh
+deployserver ansible_host=172.31.34.21 ansible_connection=ssh
