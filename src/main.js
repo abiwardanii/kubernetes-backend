@@ -14,6 +14,6 @@ routes.use('/history', history)
 routes.use('/user', user)
 routes.use('/auth', auth)
 routes.get('/', function (req, res) {
-    res.status(200).send('API Connect')
+    res.status(200).send('API Connected')
 })
 module.exports = routes
